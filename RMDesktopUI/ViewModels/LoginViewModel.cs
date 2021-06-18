@@ -11,8 +11,9 @@ namespace RMDesktopUI.ViewModels
 {
     public class LoginViewModel : Screen
     {
-        private string _userName;
-        private string _password;
+        // TODO - Remove login and pass
+        private string _userName = "demkiv.xcix@gmail.com";
+        private string _password = "Asdfg_12355";
         private IAPIHelper _apiHelper;
         private IEventAggregator _events;
 
