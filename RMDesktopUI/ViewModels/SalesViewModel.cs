@@ -89,6 +89,7 @@ namespace RMDesktopUI.ViewModels
             { 
                 _selectedCartItem = value;
                 NotifyOfPropertyChange(() => SelectedCartItem);
+                NotifyOfPropertyChange(() => CanRemoveFromCart);
             }
         }
 
@@ -204,7 +205,10 @@ namespace RMDesktopUI.ViewModels
             {
                 bool output = false;
 
-                // Make sure smth is selected
+                if (SelectedCartItem != null && SelectedCartItem?.Product.QuantityInStock > 0)
+                {
+                    output = true;
+                }
 
                 return output;
             }
@@ -212,6 +216,17 @@ namespace RMDesktopUI.ViewModels
 
         public void RemoveFromCart()
         {
+            SelectedCartItem.Product.QuantityInStock += 1;
+
+            if (SelectedCartItem.QuantityInCart > 1)
+            {
+                SelectedCartItem.QuantityInCart -= 1;
+            }
+            else
+            {
+                Cart.Remove(SelectedCartItem);
+            }
+
             NotifyOfPropertyChange(() => SubTotal);
             NotifyOfPropertyChange(() => Tax);
             NotifyOfPropertyChange(() => Total);
