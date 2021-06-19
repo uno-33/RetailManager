@@ -21,5 +21,13 @@ namespace RMDataManager.Controllers
 
             data.SaveSale(sale, RequestContext.Principal.Identity.GetUserId());
         }
+
+        [Route("GetSalesReport")]
+        public List<SaleReportModel> GetSalesReport()
+        {
+            SaleData data = new SaleData();
+
+            return data.GetSaleReport();
+        }
     }
 }
