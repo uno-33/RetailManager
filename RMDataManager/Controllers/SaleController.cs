@@ -14,6 +14,7 @@ namespace RMDataManager.Controllers
     [Authorize]
     public class SaleController : ApiController
     {
+        [Authorize(Roles = "Cashier")]
         [HttpPost]
         public void Post(SaleModel sale)
         {
@@ -22,6 +23,7 @@ namespace RMDataManager.Controllers
             data.SaveSale(sale, RequestContext.Principal.Identity.GetUserId());
         }
 
+        [Authorize(Roles = "Admin,Manager")]
         [Route("GetSalesReport")]
         public List<SaleReportModel> GetSalesReport()
         {
