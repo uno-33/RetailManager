@@ -46,7 +46,7 @@ namespace RMDesktopUI.ViewModels
                 SelectedUserRoles.Clear();
                 SelectedUserRoles = new BindingList<string>(value.Roles.Values.ToList());
 
-                LoadRoles();
+                _ = LoadRoles();
 
                 NotifyOfPropertyChange(() => SelectedUser);
             }
