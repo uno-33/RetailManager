@@ -5,24 +5,18 @@ using System.Collections.Generic;
 
 namespace RMDataManager.Library.DataAccess
 {
-    public class UserData
+    public class UserData : IUserData
     {
-        private readonly IConfiguration config;
+        private readonly ISqlDataAccess sql;
 
-        public UserData(IConfiguration config)
+        public UserData(ISqlDataAccess sql)
         {
-            this.config = config;
+            this.sql = sql;
         }
 
         public List<UserModel> GetUserById(string id)
         {
-            SqlDataAccess sql = new SqlDataAccess(config);
-
-            var p = new { Id = id };
-
-            var output = sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", p, "RMData");
-
-            return output;
+            return sql.LoadData<UserModel, dynamic>("dbo.spUserLookup", new { Id = id }, "RMData");
         }
     }
 }

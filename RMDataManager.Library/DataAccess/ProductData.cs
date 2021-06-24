@@ -6,26 +6,22 @@ using System.Linq;
 
 namespace RMDataManager.Library.DataAccess
 {
-    public class ProductData
+    public class ProductData : IProductData
     {
-        private readonly IConfiguration config;
+        private readonly ISqlDataAccess sql;
 
-        public ProductData(IConfiguration config)
+        public ProductData(ISqlDataAccess sql)
         {
-            this.config = config;
+            this.sql = sql;
         }
 
         public List<ProductModel> GetProducts()
         {
-            SqlDataAccess sql = new SqlDataAccess(config);
-
             return sql.LoadData<ProductModel, dynamic>("dbo.spProduct_GetAll", new { }, "RMData");
         }
 
         public ProductModel GetProductById(int id)
         {
-            SqlDataAccess sql = new SqlDataAccess(config);
-
             var p = new { Id = id };
 
             var output = sql.LoadData<ProductModel, dynamic>("dbo.spProduct_GetById", p, "RMData").FirstOrDefault();
